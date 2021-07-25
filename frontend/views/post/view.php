@@ -16,7 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <h1><?= $model->title ?></h1>
 
 <div class="meta">
-    <p><?= Yii::t('frontend', 'Автор') ?>: <?= $model->author->username ?> <?= Yii::t('frontend', 'Дата публикации') ?>
+    <p><?php if( isset($model->author->username)){
+            echo Yii::t('frontend', 'Автор поста') . ': ' . $model->author->username; }?>
+        <?= Yii::t('frontend', 'Дата публикации') ?>
         : <?= $model->publish_date ?> <?= Yii::t('frontend', 'Город') ?>
         : <?= Html::a($model->category->title, ['category/view', 'id' => $model->category->id]) ?></p>
 
