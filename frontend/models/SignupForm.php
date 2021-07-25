@@ -13,7 +13,7 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
-
+    public $city;
 
     /**
      * {@inheritdoc}
@@ -26,6 +26,7 @@ class SignupForm extends Model
             ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
+            ['city','string', 'max' => 255],
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
@@ -33,7 +34,7 @@ class SignupForm extends Model
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
 
             ['password', 'required'],
-            ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+            ['password', 'string', 'min' => 6],
         ];
     }
 
@@ -50,6 +51,7 @@ class SignupForm extends Model
         
         $user = new User();
         $user->username = $this->username;
+        $user->city = $this->city;
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();

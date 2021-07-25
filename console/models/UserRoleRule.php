@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: georg
- * Date: 07.03.16
- * Time: 15:44
- */
+
 
 namespace console\models;
 
@@ -21,6 +16,7 @@ class UserRoleRule extends Rule
 
     /**
      * {@inheritdoc}
+     * @throws \Exception
      */
     public function execute($user, $item, $params): bool
     {
