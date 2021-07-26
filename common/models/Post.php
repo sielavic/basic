@@ -134,12 +134,14 @@ class Post extends ActiveRecord
 
     public function getAuthor(): ActiveQuery
     {
-        return $this->hasOne(User::class, ['id' => 'author_id']);
+        return $this->hasOne(User::class, ['id' => 'author_id']); //берет из таблицы User id и сравнивает с
+        //  author_id из Post
     }
 
     public function getCategory(): ActiveQuery
     {
-        return $this->hasOne(Category::class, ['id' => 'category_id']);
+        return $this->hasOne(Category::class, ['id' => 'category_id']);  //берет из таблицы Category id и сравнивает с
+        //  category_id из Post
     }
 
     public function getComments(): ActiveQuery

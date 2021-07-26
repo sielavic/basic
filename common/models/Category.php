@@ -63,7 +63,7 @@ class Category extends ActiveRecord
     }
 
     /**
-     * Return category list
+     * Возвращает лист категорий
      *
      * @return ActiveDataProvider
      */

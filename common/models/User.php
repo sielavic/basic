@@ -5,6 +5,7 @@ use Yii;
 use yii\base\Exception;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -16,13 +17,14 @@ use yii\web\IdentityInterface;
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
- *  @property string $city
  * @property string $auth_key
  * @property int $role
+ * @property string $category_id
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
  * @property string $password write-only password
+ * @property Category $category
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -61,11 +63,10 @@ class User extends ActiveRecord implements IdentityInterface
             [['username', 'email'], 'required'],
             [['new_password'], 'required', 'on' => 'createUser'],
             [['email'], 'email'],
-            [['username', 'city', 'new_password'], 'string'],
-
+            [['username', 'new_password'], 'string'],
+            [['category_id'], 'integer'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-
             ['role', 'default', 'value' => self::ROLE_USER],
             ['role', 'in', 'range' => [self::ROLE_USER, self::ROLE_ADMIN]],
         ];
@@ -78,9 +79,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => Yii::t('backend', 'ID'),
-            'username' => Yii::t('backend', 'Username'),
+            'username' => Yii::t('backend', 'Ваше имя'),
             'email' => Yii::t('backend', 'Email'),
             'role' => Yii::t('backend', 'Role'),
+            'category_id' => Yii::t('backend', 'Ваш город'),
             'status' => Yii::t('backend', 'Status'),
             'new_password' => Yii::t('backend', 'New Password'),
             'created_at' => Yii::t('backend', 'Created at'),
@@ -137,6 +139,16 @@ class User extends ActiveRecord implements IdentityInterface
             'status' => self::STATUS_ACTIVE,
         ]);
     }
+
+
+    public function getCategory(): ActiveQuery
+    {
+        return $this->hasOne(Category::class, ['id' => 'category_id']);//берет из таблицы Category id и сравнивает с
+        //  category_id из User
+
+    }
+
+
 
     /**
      * @inheritdoc

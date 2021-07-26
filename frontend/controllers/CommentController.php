@@ -15,6 +15,7 @@ class CommentController extends Controller
 {
     /**
      * @return string|Response
+     * @throws \Throwable
      */
     public function actionAdd()
     {
